@@ -1,0 +1,987 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{P1\_StroopEffect}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{project-1-stroop-effect}{%
+\section{Project 1: Stroop Effect}\label{project-1-stroop-effect}}
+
+    \textbf{Prepared By:} Samba Reyes Njie Jr.
+
+\textbf{When:} December 2017
+
+    \hypertarget{background-information}{%
+\subsubsection{Background Information}\label{background-information}}
+
+In a Stroop task, participants are presented with a list of words, with
+each word displayed in a color of ink. The participant's task is to say
+out loud the color of the ink in which the word is printed. The task has
+two conditions: a congruent words condition, and an incongruent words
+condition.
+
+\begin{itemize}
+\item
+  In the congruent words condition, the words being displayed are color
+  words whose names match the colors in which they are printed.
+\item
+  In the incongruent words condition, the words displayed are color
+  words whose names do not match the colors in which they are printed.
+\end{itemize}
+
+In each case, we measure the time it takes to name the ink colors in
+equally-sized lists. Each participant will go through and record a time
+from each condition.
+
+    \hypertarget{questions-for-investigation}{%
+\subsubsection{Questions For
+Investigation}\label{questions-for-investigation}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  What is our independent variable? What is our dependent variable?
+\item
+  What is an appropriate set of hypotheses for this task? What kind of
+  statistical test do you expect to perform? Justify your choices.
+\end{enumerate}
+
+Go to this
+\href{https://faculty.washington.edu/chudler/java/ready.html}{link},
+which has a Java-based applet for performing the Stroop task. Record the
+times that you received on the task (you do not need to submit your
+times to the site.) Now, download
+\href{https://drive.google.com/file/d/0B9Yf01UaIbUgQXpYb2NhZ29yX1U/view}{this
+dataset} which contains results from a number of participants in the
+task. Each row of the dataset contains the performance for one
+participant, with the first number their results on the congruent task
+and the second number their performance on the incongruent task.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Report some descriptive statistics regarding this dataset. Include at
+  least one measure of central tendency and at least one measure of
+  variability.
+\item
+  Provide one or two visualizations that show the distribution of the
+  sample data. Write one or two sentences noting what you observe about
+  the plot or plots.
+\item
+  Now, perform the statistical test and report your results. What is
+  your confidence level and your critical statistic value? Do you reject
+  the null hypothesis or fail to reject it? Come to a conclusion in
+  terms of the experiment task. Did the results match up with your
+  expectations?
+\item
+  Optional: What do you think is responsible for the effects observed?
+  Can you think of an alternative or similar task that would result in a
+  similar effect? Some research about the problem will be helpful for
+  thinking about these two questions!
+\end{enumerate}
+
+    \hypertarget{prepwork}{%
+\subsubsection{Prepwork}\label{prepwork}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Import Libraries}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k+kn}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k+kn}{as} \PY{n+nn}{sns}
+        \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k+kn}{import} \PY{n}{stats}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Read in data}
+        \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{stroopdata.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Table 1: Data on Stroop Effect Participants from Both Treatments}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{data}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Table 1: Data on Stroop Effect Participants from Both Treatments
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:}     Congruent  Incongruent  Difference
+         0      12.079       19.278       7.199
+         1      16.791       18.741       1.950
+         2       9.564       21.214      11.650
+         3       8.630       15.687       7.057
+         4      14.669       22.803       8.134
+         5      12.238       20.878       8.640
+         6      14.692       24.572       9.880
+         7       8.987       17.394       8.407
+         8       9.401       20.762      11.361
+         9      14.480       26.282      11.802
+         10     22.328       24.524       2.196
+         11     15.298       18.644       3.346
+         12     15.073       17.510       2.437
+         13     16.929       20.330       3.401
+         14     18.200       35.255      17.055
+         15     12.130       22.158      10.028
+         16     18.495       25.139       6.644
+         17     10.639       20.429       9.790
+         18     11.344       17.425       6.081
+         19     12.369       34.288      21.919
+         20     12.944       23.894      10.950
+         21     14.233       17.960       3.727
+         22     19.710       22.058       2.348
+         23     16.004       21.157       5.153
+\end{Verbatim}
+        
+    \hypertarget{identifying-variables-and-problem-formalization}{%
+\subsubsection{1. Identifying Variables and Problem
+Formalization}\label{identifying-variables-and-problem-formalization}}
+
+    \textbf{Independent Variable}: Congruent Word Performance Treatment,
+Incongruent Word Performance Treatment
+
+\textbf{Dependent Variable}: Difference in word performance
+
+One of the phenomena we can test is if there is an associative
+difference between reading color names and reading colors. As such, if
+we design a test to record completion times of participants for a series
+of words describing the colors they are assigned to, we will be testing
+the association of words to color. If we want to go beyond describing a
+relationship and studying causality, then we want to use \emph{causal
+inference} to distinguish if disassociating words from color as a
+treatment group would provide any differences.
+
+To make the problem well-posed, we list the following definitions:
+
+\begin{itemize}
+\item
+  \textbf{Stroop Effect:} is a phenomenon demonstrating the interference
+  or inhibition of a specific task. In particular, it is the difference
+  of reaction times between incongruent and congruent treatment cases.
+  The difference in brain activity between these two conditions (i.e.,
+  incongruent minus congruent) could reveal brain systems involved in
+  the attentionally mediated resolution of the conflict between the
+  habitual response of reading words vs.~the task demands of naming the
+  color of the words\(^{[3],[5]}\).
+\item
+  \textbf{Law of associative inhibition:} ``If \(a\) is already
+  connected with \(b\), then it is difficult to connect it with \(k\),
+  {[}because{]} \(b\) gets in the way.''\(^{[5]}\) The inhibition is the
+  prevailing idea behind the interference phenomenon in the Stroop
+  effect, where the automatic association of reading color names
+  (``\(a\)'') and naming colors (``\(b\)'') is interfered by the
+  incongruent case.
+\item
+  \textbf{Congruent words condition:} The treatment state in which
+  participants record reading duration for words where the noun and
+  presentation color are congruent, or match\(^{[5]}\). For a
+  participant/observation \(i\), their congruent word performance is
+  \(\theta_{i}\), and the set of them for all observations \(\Theta\).
+\item
+  \textbf{Incongruent words condition:} The treatment state in which
+  participants record reading duration for words where the noun and
+  presentation color are incongruent\(^{[5]}\). For a
+  participant/observation \(i\), their congruent word performance is
+  \(\phi_{i}\), and the set of them for all observations \(\Phi\).
+\item
+  \textbf{Word Performance Difference:} Difference between congruent and
+  inconguent words conditon performances, which operationalizes the
+  effect of interference of word reading upon color naming:
+\end{itemize}
+
+\[d_{i} \doteq \phi_i - \theta_i\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sample Mean Difference:} The mean of word performance
+  difference scores across all observations:
+\end{itemize}
+
+\[\bar{d} \doteq \frac{1}{n}\sum_{i = 1}^{n} d_{i}\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sample Standard Deviation Difference:} Standard deviation of
+  difference scores across all observations:
+\end{itemize}
+
+\[s_{{d}} \doteq \sqrt{\frac{1}{n - 1}\sum_{i = 1}^{n} \left ( d_{i} - \bar{d}_{i} \right )^{2}}\]
+
+Our data is collected via the
+\href{https://faculty.washington.edu/chudler/java/ready.html}{online
+Stroop test}\(^{[1]}\), which collects congruent and incongruent word
+task completion times for \emph{each} participant. As such, for any
+given observation \(i\), where \(i = 1, ..., n\), the net effect of
+interference is observed as \(d_{i}\), as described above.
+
+    \hypertarget{a.-hypothesis-formulation}{%
+\subsubsection{2a. Hypothesis
+Formulation}\label{a.-hypothesis-formulation}}
+
+    We formulate the hypothesis as follows:
+
+\[H_{0} \: : \: \mu_d = 0\]
+
+\[H_{1} \: : \: \mu_d > 0\]
+
+Our goal is to understand if associative inhibition (or
+interference)\(^{[5]}\) between reading words and naming colors exists.
+In other words, we want to know if there is significant evidence for a
+Stroop effect. To do this, we want to understand if there exists
+significant evidence for an interference, which is modeled by the
+difference in response times between mismatched nouns and colors
+(incongruent word task) and matching nouns and colors (congruent word
+task).
+
+As such, the above mathematical formulation of hypotheses is a
+sufficient representation. For one, the null hypothesis assumes that
+there is no difference between population congruent word performance and
+population incongruent word performance, which cannot be specifically
+proven for now but can be retained or rejected depending on test
+results. The alternate hypothesis is a one-tailed hypothesis due to the
+assumption that incongruent word task times will almost always be
+greater than their congruent counterparts.
+
+    \hypertarget{b.-statistical-test-formulation}{%
+\subsubsection{2b. Statistical Test
+Formulation}\label{b.-statistical-test-formulation}}
+
+    Since both \(\theta_{i}\) and \(\phi_{i}\) are dependent on one another
+for each observation, we choose a \textbf{paired sample t-test}. There
+are three main reasons for why we choose this test. Let us discuss the
+simpler reason first:
+
+\textbf{Reason 1:} We have \(n < 30\). As such, using a z-test approach
+will not work, and a t-test approach is ideal.
+
+\textbf{Reason 2:} The assumptions for a dependent t-test are met. The
+assumptions are as follows: \(^{[6],[7]}\)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{The dependent variable must be continuous (interval/ratio).}
+
+  For
+  \(D \doteq \left \{ d_{i} \: : d_{i} \: \in \mathbb{R} \right \}\),
+  the set of word performance differences for all observations, is
+  continuous since any value is in the real space, i.e.,
+  \(D \subset \mathbb{R}\).
+\item
+  \emph{The observations are independent of one another.}
+
+  Since the data is collected from independently participating
+  participants, then for any participant \(i, j\), where \(i \neq j\),
+  \(\theta_i\) is independent from \(\theta_j\) and \(\phi_i\) is
+  independent from \(\phi_j\).
+\item
+  \emph{The dependent variable should be approximately normally
+  distributed.}
+
+  This is true due to successful goodness of fit tests, which we will
+  show later when doing goodness of fit tests in the Visualizations
+  section. If we assume normality or any distribution, we will need a
+  parametric test, for which a paired 2-sample t-test would suffice.
+  However, if there is no distribution, a non-parametric test is needed,
+  for which the Wilcoxon Signed Rank Test will suffice.
+\item
+  \emph{The dependent variable should not contain any outliers.}
+
+  We will check this in our visualization later.
+\end{enumerate}
+
+\textbf{Reason 3:} The paired design is an effective experimental
+technique to inspect the difference in associative interference between
+a congruent and incongruent batch. This is because \(\theta_i\) and
+\(\phi_i\) are dependent on \(i\), which exhibits a within-subjects
+design. A within-subjects design is an experimental design where the
+same group participates in two treatments\(^{[8]}\). Since a dependent
+t-test is a type of within-subjects design, the statistical test befits
+the design type.
+
+    \hypertarget{descriptive-statistics}{%
+\subsubsection{3. Descriptive Statistics}\label{descriptive-statistics}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} Transform original data to include a column of pairwise differences per observation}
+         \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Incongruent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Congruent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} user\PYZhy{}defined function to calculate mode}
+         \PY{k}{def} \PY{n+nf}{mode}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Returns the mode of a pandas data frame.\PYZdq{}\PYZdq{}\PYZdq{}}
+             \PY{n}{modes} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{mode}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+             \PY{n}{tmp} \PY{o}{=} \PY{n}{modes}\PY{o}{.}\PY{n}{mode}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{output} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{tmp}\PY{p}{)}
+             \PY{n}{output}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{columns}
+             \PY{k}{return} \PY{n}{output}
+         
+         \PY{c+c1}{\PYZsh{} Create dataframe of statistics using Pandas and stats libraries}
+         \PY{n}{means} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{stdevs} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{variances} \PY{o}{=} \PY{n}{stdevs}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}
+         \PY{n}{medians} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{q1} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{quantile}\PY{p}{(}\PY{n}{q}\PY{o}{=} \PY{l+m+mf}{0.25}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{q3} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{quantile}\PY{p}{(}\PY{n}{q}\PY{o}{=} \PY{l+m+mf}{0.75}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{modes} \PY{o}{=} \PY{n}{mode}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+         \PY{n}{lens} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{desc} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{means}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Means}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{stdevs}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Std Dev}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} 
+                           \PY{n}{variances}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Variance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{q1}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{First Quartiles}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{medians}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Medians}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{q3}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Third Quartiles}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{modes}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Modes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{lens}\PY{o}{.}\PY{n}{rename}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+         \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Table 2: Descriptive Statistics}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{desc}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Table 2: Descriptive Statistics
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:}                  Congruent  Incongruent  Difference
+         Means            14.051125    22.015917    7.964792
+         Std Dev           3.559358     4.797057    4.864827
+         Variance         12.669029    23.011757   23.666541
+         First Quartiles  11.895250    18.716750    3.645500
+         Medians          14.356500    21.017500    7.666500
+         Third Quartiles  16.200750    24.051500   10.258500
+         Modes             8.630000    15.687000    1.950000
+         n                24.000000    24.000000   24.000000
+\end{Verbatim}
+        
+    We chose the mean as a measure of centrality and the standard deviation
+to be the measure of variability. The above table summarizes descriptive
+statistics for each treatment set, \(\Theta\) and \(\Phi\), and the
+statistics of the difference of samples, \(D = \Phi - \Theta\). We then
+get the following statistics (with rounding):
+
+\[\bar{d} = 7.964792\]
+
+\[s_{d} = 4.864827\]
+
+    \hypertarget{visualizations}{%
+\subsubsection{4. Visualizations}\label{visualizations}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{data2} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{level}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{data2}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:}    index  Congruent  Incongruent  Difference
+        0      0     12.079       19.278       7.199
+        1      1     16.791       18.741       1.950
+        2      2      9.564       21.214      11.650
+        3      3      8.630       15.687       7.057
+        4      4     14.669       22.803       8.134
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{data3} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{melt}\PY{p}{(}\PY{n}{data2}\PY{p}{,} \PY{n}{id\PYZus{}vars}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{index}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                         \PY{n}{var\PYZus{}name}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                         \PY{n}{value\PYZus{}name}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Completion\PYZus{}Times}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{data3}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Observations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Completion\PYZus{}Times}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{data3}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:}    Observations       Type  Completion\_Times
+         0             0  Congruent            12.079
+         1             1  Congruent            16.791
+         2             2  Congruent             9.564
+         3             3  Congruent             8.630
+         4             4  Congruent            14.669
+\end{Verbatim}
+        
+    \hypertarget{figure-1-analysis-of-spread}{%
+\paragraph{Figure 1: Analysis of
+Spread}\label{figure-1-analysis-of-spread}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Visualization Analysis of Spread}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                     \PY{n}{y}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Completion\PYZus{}Times}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                     \PY{n}{hue}\PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                     \PY{n}{data}\PY{o}{=}\PY{n}{data3}\PY{p}{,} 
+                     \PY{n}{palette}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Set3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure 1: Boxplot of Completion Times}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} <matplotlib.text.Text at 0x11b556290>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{P1_StroopEffect_files/P1_StroopEffect_23_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The boxplots for Figure 1 expose the visual representation of the
+summary statistics from part 3. on the purple box-and-whisker plot, we
+observe that there is a large upper whisker (top quartile) with a large
+spread, which translates to a right-skewed probability density function.
+This is verified in Figure 2, which displays a histogram of the
+differences set \(D\), with a tendency for a larger spread above the
+mean. It is also verified by observing Table 2, which verifies that the
+mean of differences \(\bar{d} \approx 7.97\) is larger than its median,
+around \(7.67\), which is indicative of a right-skewed distribution.
+
+Figure 1 also exposes the existence of outliers for the incongruent
+treatment as shown from the box-and-whisker plot of the incongruent set
+\(\Phi\) (shown in yellow), which may have influenced the existence of
+the few outliers in the difference box-and-whisker plot (shown in
+purple). This will influence our interpretations and the goodness of fit
+of the data to an approximately normal distribution, which is a
+significant assumption for performing the parametric paired sample
+t-test.
+
+    \hypertarget{figures-2-and-3-histograms-and-normality-approximations}{%
+\paragraph{Figures 2 and 3: Histograms and Normality
+Approximations}\label{figures-2-and-3-histograms-and-normality-approximations}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} 
+                      \PY{n}{axlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Completion Times (seconds)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure 2: Histogram of Differences}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} <matplotlib.text.Text at 0x11b689510>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{P1_StroopEffect_files/P1_StroopEffect_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Congruent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Incongruent}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{:}
+             \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{n}{i}\PY{p}{,} \PY{n}{axlabel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Completion Times (seconds)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Figure 3: Histogram of Treatment Types}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <matplotlib.legend.Legend at 0x11dcac690>
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{P1_StroopEffect_files/P1_StroopEffect_27_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Figure 3 displays all the histograms of congruent and incongruent
+treatments with their difference, which shows that the difference is the
+leftmost shifted plot which may indicate that the average differences
+between the two treatments (``\(\Phi - \Theta\)'' so to speak) are not
+too drastically different to result in statistically significant
+results.
+
+    \hypertarget{goodness-of-fit-test-kurtosis-test}{%
+\paragraph{Goodness of Fit Test: Kurtosis
+Test}\label{goodness-of-fit-test-kurtosis-test}}
+
+Figures 1 and 2 display that the data may not approximate a normal
+distribution very well due to an evident skew to the right, yet since we
+have a small sample size and at least two outliers, this is unclear. We
+will perform a more quantitative test called the kurtosis test, a
+hypothesis test from the SciPy package whose null asserts that the data
+is of a normal distribution\(^{[9]}\).
+
+If we compare with an alpha level \(\alpha_{kurtosis} = 0.05\), and
+observe the test below:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{stats}\PY{o}{.}\PY{n}{kurtosistest}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} KurtosistestResult(statistic=1.6441688335149749, pvalue=0.10014133279077567)
+\end{Verbatim}
+        
+    Then with a \(p_{kurtosis} \approx 0.1001 > \alpha_{kurtosis}\), we
+retain and do not reject the null hypothesis which is in itself
+inconclusive.
+
+    \hypertarget{figure-4-goodness-of-fit-test-probability-plot}{%
+\paragraph{Figure 4: Goodness of Fit Test: Probability
+Plot}\label{figure-4-goodness-of-fit-test-probability-plot}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Figure 4: Probability Plot}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{stats}\PY{o}{.}\PY{n}{probplot}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{dist}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{norm}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{plot} \PY{o}{=} \PY{n}{plt}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Figure 4: Probability Plot
+
+    \end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:} ((array([-1.90380091, -1.48287381, -1.22601535, -1.03156092, -0.8698858 ,
+                  -0.7282709 , -0.59996024, -0.48085763, -0.36822879, -0.26009875,
+                  -0.154935  , -0.05146182,  0.05146182,  0.154935  ,  0.26009875,
+                   0.36822879,  0.48085763,  0.59996024,  0.7282709 ,  0.8698858 ,
+                   1.03156092,  1.22601535,  1.48287381,  1.90380091]),
+           array([  1.95 ,   2.196,   2.348,   2.437,   3.346,   3.401,   3.727,
+                    5.153,   6.081,   6.644,   7.057,   7.199,   8.134,   8.407,
+                    8.64 ,   9.79 ,   9.88 ,  10.028,  10.95 ,  11.361,  11.65 ,
+                   11.802,  17.055,  21.919])),
+          (4.848714513731152, 7.9647916666666658, 0.95231198471853418))
+\end{Verbatim}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{P1_StroopEffect_files/P1_StroopEffect_33_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We then refer to Figure 4, a probability plot for further inspection of
+the goodness of fit to a normal distribution. A probability plot is a
+scatter plot of the theoretical quantiles of the expected distribution
+plotted against the ordered values of the observed
+distribution\(^{[7]}\).
+
+Here, our observed distribution, plotted in the Y-axis, is the
+difference set \(D\) and the expected distribution, whose quantiles are
+plotted in the X-axis, is the normal distribution as specified by the
+\texttt{dist\ =\ norm} scipy function argument. An observed set of data
+that closely follows a normal distribution would have a linear
+relationship in the plot. Sans outliers, we see an approximately linear
+relationship. The tails of the plot may be a bit different: the data
+points on the lower-left quadrant indicate that the observed values on
+the left are larger than that of the expected normal distribution, which
+would lessen the degree of fitting to a normal distribution. There are
+also a few points on the upper-right quadrant (except the outliers) that
+are beneath the red line, indicating that those observed values are
+lower in value than a theoretical normal distribution.
+
+\hypertarget{concluding-interpretations-from-visualizations}{%
+\paragraph{Concluding Interpretations from
+Visualizations}\label{concluding-interpretations-from-visualizations}}
+
+However for the most part, the data follows a linear relationship
+between observed data and normal distribution quantiles, which favors
+the argument towards a data that well approximates a normal
+distribution. We can attribute its skewness due to outliers as well as a
+small sample. As such, with a fail-to-reject kurtosis test, skewed
+histogram and box-and-whisker, and approximately linear probability
+plot, the data can be assumed to be approximately normally distributed
+for its sample size.
+
+We do have outliers, yet they are not significantly far from the rest of
+the data, so we will assert that Assumptions 3 and 4 are met in the
+Statistical Test Formulation section (2b) and we will go ahead and
+assume that the paired sample t-test is a sufficient test to use for
+this data.
+
+    \hypertarget{statistical-test-implementation}{%
+\subsubsection{5. Statistical Test
+Implementation}\label{statistical-test-implementation}}
+
+    With a statistical test in hand, we can then perform the necessary steps
+towards finding a test statistic, computing a p-value, and making a
+decision with stated null and alternate hypotheses. We restate the
+hypotheses again and other necessary pieces of the paired 2-sample
+t-test:
+
+\hypertarget{null-and-alternate-hypotheses}{%
+\paragraph{Null and Alternate
+Hypotheses:}\label{null-and-alternate-hypotheses}}
+
+\[H_{0} \: : \: \mu_d = 0\]
+
+\[H_{1} \: : \: \mu_d > 0\]
+
+\hypertarget{basic-statistics}{%
+\paragraph{Basic Statistics}\label{basic-statistics}}
+
+\(\bar{d} = 7.964792\)
+
+\(s_{d} = 4.864827\)
+
+\(n = 24\)
+
+\(df = 23\)
+
+\(\alpha = 0.0005\)
+
+\hypertarget{estimated-standard-error-of-the-mean}{%
+\paragraph{Estimated Standard Error of the
+Mean}\label{estimated-standard-error-of-the-mean}}
+
+This is defined as follows:
+
+\[s_{\bar{d}} = \frac{s_d}{\sqrt{n}} = \frac{4.864827}{\sqrt{24}} = 0.99302865307622179\]
+
+\hypertarget{t-statistic}{%
+\paragraph{T-Statistic}\label{t-statistic}}
+
+We compute the t-statistic for a paired 2-sample t-test with the
+following formulation\(^{[7]}\):
+
+\[t = \frac{\bar{d} - \mu_d}{s_{\bar{d}}}\]
+
+As such:
+
+\[t = \frac{\bar{d} - \mu_d}{s_d} = \frac{7.964792 - 0}{0.99302865307622179} = 8.0207\]
+
+With degrees of freedom \(df = n - 1 = 23\)\(^{[6]}\). Since this is the
+case, we find the critical value of a T-distribution with a chosen
+\(\alpha = 0.0005\), we have\(^{[10]}\):
+
+\[T_{\alpha = 0.0005} = 3.768\]
+
+\hypertarget{p-value}{%
+\paragraph{P-value}\label{p-value}}
+
+We thus gain a p-value \(p\) for the random variable of differences set
+\(D\) distribution, \(X\), with the following definition\(^{[6]}\) and
+implementation:
+
+\[p = \mathbb{P}\left\{X > t = 8.0207\right \} = 4.103\text{x}10^{-08}\]
+
+\hypertarget{conclusion}{%
+\paragraph{Conclusion}\label{conclusion}}
+
+We can then see that for a right-tailed test, we observe that at an
+alpha level of \(\alpha = 0.0005\), we arrive at a test statistic that
+is within the critical region of a one-tailed test, which means that we
+reject the null hypothesis and assert that there is significant evidence
+that there is a difference in means of completion times between reading
+color words that match their colors and reading color words that do not
+match their colors, which shows significant evidence for a treatment
+effect and for associative inhibition.
+
+    \hypertarget{references}{%
+\subsubsection{References:}\label{references}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \href{https://faculty.washington.edu/chudler/java/ready.html}{Stroop
+  Effect Personal Test}
+\item
+  \href{https://faculty.washington.edu/chudler/words.html\#seffect}{Stroop
+  Effect Website}
+\item
+  \href{http://www.pnas.org/content/87/1/256.full.pdf}{The anterior
+  cingulate cortex mediates processing selection in the Stroop
+  attentional conflict paradigm}
+\item
+  \href{https://link.springer.com/content/pdf/10.3758\%2FPBR.16.6.987.pdf}{Stroop
+  and Picture-Word Interference are two sides of the same coin}
+\item
+  \href{http://psychclassics.yorku.ca/Stroop/}{Stroop Original Paper}
+\item
+  \href{http://www.statisticssolutions.com/manova-analysis-paired-sample-t-test/}{Paired
+  Sample T-Test}
+\item
+  Rice, John A. \emph{Mathematical Statistics and Data Analysis}.
+  Belmont, CA: Thomson/Brooks/Cole, 2007, pp.~370-359, 444-459.
+\item
+  \href{https://web.mst.edu/~psyworld/within_subjects.htm}{Within-Subject
+  Design}
+\item
+  \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kurtosistest.html\#scipy.stats.kurtosistest}{Scipy
+  Kurtosis Test Documentation}
+\item
+  \href{http://www.statisticshowto.com/tables/t-distribution-table/}{T-Table
+  for One-Tailed and Two-Tailed Tests}
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
